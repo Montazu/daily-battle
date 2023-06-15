@@ -22,7 +22,7 @@ def join_battle(id, slot):
 	data = response.json()
 	if data['success']:
 		print(f'https://key-drop.com/pl/case-battle/{id}')
-	else:
+	if data['errorCode'] == 'userHasToWaitBeforeJoiningFreeBattle':
 		print(data['message'])
 		input("Press Enter to continue...")
 		sys.exit()
