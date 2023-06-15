@@ -24,6 +24,7 @@ def join_battle(id, slot):
 		print(f'https://key-drop.com/pl/case-battle/{id}')
 	else:
 		print(data['message'])
+		input("Press Enter to continue...")
 		sys.exit()
 
 def on_message(ws, message):
