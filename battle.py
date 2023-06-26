@@ -7,9 +7,8 @@ import webbrowser
 import time
 
 def on_open(ws):
-	print("Searching free battles...")
-	message = '40/case-battle'
-	ws.send(message)
+	print('Searching free battles...')
+	ws.send('40/case-battle')
 
 def battle_status(id):
 	response = requests.get(f'https://kdrp2.com/CaseBattle/gameFullData/{id}')
@@ -24,7 +23,7 @@ def join_battle(id, slot):
 		print(f'https://key-drop.com/pl/case-battle/{id}')
 	if data['errorCode'] == 'userHasToWaitBeforeJoiningFreeBattle':
 		print(data['message'])
-		input("Press Enter to continue...")
+		input('Press Enter to continue...')
 		sys.exit()
 
 def on_message(ws, message):
@@ -39,15 +38,15 @@ def on_message(ws, message):
 	join_battle(battle_id, free_slots[0])
 
 def on_close(ws):
-	print("Battle search error")
+	print('Battle search error')
 
-if __name__ == "__main__":
-	webbrowser.open("https://key-drop.com/pl/token?t=1686828540445")
+if __name__ == '__main__':
+	webbrowser.open('https://key-drop.com/pl/token?t=1686828540445')
 	time.sleep(1)
-	question = "Paste the token: "
+	question = 'Paste the token: '
 	token = input(question)
-	ws = websocket.WebSocketApp("wss://kdrp3.com/socket.io/?connection=battle&EIO=4&transport=websocket",
-								on_open=on_open,
-								on_message=on_message,
-								on_close=on_close)
+	ws = websocket.WebSocketApp('wss://kdrp3.com/socket.io/?connection=battle&EIO=4&transport=websocket',
+		on_open=on_open,
+		on_message=on_message,
+		on_close=on_close)
 	ws.run_forever()
