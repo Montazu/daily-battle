@@ -8,7 +8,7 @@ import time
 
 def on_open(ws):
 	print("Searching free battles...")
-	message = '40/case-battle,{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJsYW5nIjoiUEwiLCJjb3VudHJ5IjoiRU4iLCJzdWIiOiI2MjM2MjAxIiwiZXhwIjoxNjgzNjQ0MjM0fQ.hwJjpRrXQHFL8OzrcYfq_bS4Rg2xcuYHhg52Qe8uPBrs5GuOgTFOQGB0oYbJc7mTIj9fhfQBj6sOrg1yz-DTOodlcd5MtM6N5azz7RUm3CzA2r5SjwiUTc9jrjAFHDgEayAMPsaFAENe_KikoUXkXAf_YsVlAk5UyX1MWJ6jnJS8AIrHok7IfqtcXSDo-J8bafpe5rX1I7j6qvhCDM_tRn39cedDwWI9rhCkUahWwciSm4rtDUodqc-DVYES5NaUXJMcZ2NrF53-M80oQgLrXa5y9ivz-YdLEUi9rH8bT_YWDWX9E_EEalFK-AbyLt_XHT3KovkXwsQZP9MDy1Z8ww"}'
+	message = '40/case-battle'
 	ws.send(message)
 
 def battle_status(id):
