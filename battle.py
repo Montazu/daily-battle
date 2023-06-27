@@ -1,7 +1,6 @@
 import websocket
 import sys
 import requests
-import re
 import webbrowser
 import time
 
@@ -18,30 +17,30 @@ def battle_status(id):
 
 
 def join_battle(id, slot):
-	url = f"https://kdrp2.com/CaseBattle/joinCaseBattle/{id}/{slot}"
-	headers = {"authorization": f"Bearer {token}"}
-	response = requests.post(url, headers=headers).json()
-	if response["success"]:
-		print(f"https://key-drop.com/case-battle/{id}")
-	if response["errorCode"] == "userHasToWaitBeforeJoiningFreeBattle":
-		print(response["message"])
-		input("Press Enter to continue...")
-		sys.exit()
+    url = f"https://kdrp2.com/CaseBattle/joinCaseBattle/{id}/{slot}"
+    headers = {"authorization": f"Bearer {token}"}
+    response = requests.post(url, headers=headers).json()
+    if response["success"]:
+        print(f"https://key-drop.com/case-battle/{id}")
+    if response["errorCode"] == "userHasToWaitBeforeJoiningFreeBattle":
+        print(response["message"])
+        input("Press Enter to continue...")
+        sys.exit()
 
 
 def on_message(ws, message):
-	if not re.search(r",1]", message): return
-	battle_id = re.search(r'",\[(.*?),.,"', message).group(1)
-	battle_data = battle_status(battle_id)
-	if battle_data["status"] == "ended": return
-	slots = [0, 1, 2, 3]
-	occupied_slots = [user["slot"] for user in battle_data["users"]]
-	free_slots = [slot for slot in slots if slot not in occupied_slots]
-	join_battle(battle_id, free_slots[0])
+    if ",1]" in message:
+        battle_id = (message.split(",")[2]).replace("[", "")
+        battle_data = battle_status(battle_id)
+        if battle_data["status"] != "ended":
+            slots = [0, 1, 2, 3]
+            occupied_slots = [user["slot"] for user in battle_data["users"]]
+            free_slots = [slot for slot in slots if slot not in occupied_slots]
+            join_battle(battle_id, free_slots[0])
 
 
 def on_close(ws):
-	print("Battle search error")
+    print("Battle search error")
 
 
 if __name__ == "__main__":
