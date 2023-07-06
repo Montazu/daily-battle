@@ -29,7 +29,7 @@ def join_battle(id, slot):
 
 
 def on_message(ws, message):
-    if ",1]" in message:
+    if "],1" in message:
         battle_id = (message.split(",")[2]).replace("[", "")
         battle_data = battle_status(battle_id)
         if battle_data["status"] != "ended":
