@@ -1,27 +1,66 @@
+
 # Daily Battle
 
-The Daily Battle is a Python application that allows you to open daily battles on [KeyDrop](https://key-drop.com). It automates the process of participating in daily battles.
+Daily Battle is a Python application that makes it easy to open daily battles on [Key-Drop](https://key-drop.com).
 
-## Installation
-To install the required dependencies for the Daily Battle, follow these steps:
-1. Make sure you have Python installed on your system. You can download Python from the official website: [python.org](https://www.python.org).
-2. Clone the repository or download the source code of the Daily Battle to your local machine.
-3. Open a terminal or command prompt and navigate to the project's directory.
-4. Run the following command to install the required dependencies:
+
+## Features
+
+- Easy to use
+- Joining battles quickly and easily
+- Automate joining battles [guide](#guide-to-automatic-battle-joining)
+
+
+## Run Locally
+
+Clone the project
+
 ```bash
-pip install -r requirements.txt
+  git clone https://github.com/Montazu/daily-battle.git
 ```
-This command will use `pip` (Python package installer) to install all the necessary packages specified in the `requirements.txt` file.
 
-## Usage
-To start using the Daily Battle, follow these steps:
-1. Make sure you have installed the required dependencies as mentioned in the installation instructions.
-2. Open a terminal or command prompt and navigate to the directory where you have the Daily Battle files.
-3. Run the following command to start the application:
+Go to the project directory
+
 ```bash
-python battle.py
+  cd daily-battle
 ```
-4. Follow the prompts or instructions provided by the application to participate in daily battles.
 
+Install dependencies
+
+```bash
+  pip install -r requirements.txt
+```
+
+Start the script
+
+```bash
+  python battle.py
+```
+
+
+## Options
+
+Short option|Long option|Description
+---|---|---
+`-h`|`--help`|Show help
+`-c COOKIE`|`--cookie COOKIE`| Generate token from cookie
+
+## Guide to Automatic Battle Joining
+
+Go to the [Key-Drop](https://key-drop.com/) website where you must be logged in. In your browser, open devtools with `CTRL+SHIFT+I`, then go to `Application > Cookies > session_id`, and copy the value.
+
+Open crontab by typing the following command in the terminal
+```bash
+  crontab -e
+```
+
+Edit the crontab file
+
+```bash
+  0 0 * * * python ~/path/to/daily-battle/battle.py -cookie <session_id value>
+```
+
+Now the script will run daily at midnight and join the free battle if you have any coupons available.
 ## Disclaimer
-Please note that the Daily Battle is a third-party application and is not affiliated with KeyDrop. Use it responsibly and in accordance with KeyDrop's terms and conditions. The application is provided as-is, and the developers are not responsible for any misuse or consequences arising from its usage.
+
+Please note that the Daily Battle is a third-party application and is not affiliated with Key-Drop. Use it responsibly and in accordance with Key-Drop's terms and conditions. The application is provided as-is, and the developers are not responsible for any misuse or consequences arising from its usage.

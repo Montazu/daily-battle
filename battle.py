@@ -1,13 +1,23 @@
-import websocket
-import sys
+import argparse
 import requests
-import webbrowser
+import sys
 import time
+import webbrowser
+import websocket
 
 
-def on_open(ws):
-    print("Searching free battles...")
-    ws.send("40/case-battle")
+def get_token(cookie=None):
+    url = "https://key-drop.com/pl/token"
+    if cookie:
+        headers = {
+            "cookie": f"session_id={cookie}; __vioShield=49f7a4dd63e6f34db13d25b9be83c7e5",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
+        }
+        return requests.get(url, headers=headers).text
+    else:
+        webbrowser.open(url)
+        time.sleep(1)
+        return input("Paste the token: ")
 
 
 def battle_status(id):
@@ -24,8 +34,14 @@ def join_battle(id, slot):
         print(f"https://key-drop.com/case-battle/{id}")
     if response["errorCode"] == "userHasToWaitBeforeJoiningFreeBattle":
         print(response["message"])
-        input("Press Enter to continue...")
+        if not args.cookie:
+            input("Press Enter to continue...")
         sys.exit()
+
+
+def on_open(ws):
+    print("Searching free battles...")
+    ws.send("40/case-battle")
 
 
 def on_message(ws, message):
@@ -44,9 +60,11 @@ def on_close(ws):
 
 
 if __name__ == "__main__":
-    webbrowser.open("https://key-drop.com/token")
-    time.sleep(1)
-    token = input("Paste the token: ")
+    description = "It automates the process of participating in daily battles."
+    parser = argparse.ArgumentParser(description)
+    parser.add_argument("-c", "--cookie", help="Generates a token")
+    args = parser.parse_args()
+    token = get_token(args.cookie)
     ws = websocket.WebSocketApp(
         "wss://kdrp3.com/socket.io/?EIO=4&transport=websocket",
         on_open=on_open,
