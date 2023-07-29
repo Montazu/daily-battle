@@ -1,10 +1,10 @@
 import argparse
+import re
 import requests
 import sys
 import time
 import webbrowser
 import websocket
-import re
 from selenium import webdriver
 from selenium_stealth import stealth
 from selenium.webdriver.common.by import By
@@ -29,12 +29,7 @@ def get_token(cookie=None):
             fix_hairline=True,
         )
         driver.get(url)
-        driver.add_cookie(
-            {
-                "name": "session_id",
-                "value": cookie,
-            }
-        )
+        driver.add_cookie({"name": "session_id", "value": cookie})
         wait = WebDriverWait(driver, 10)
         wait.until(
             EC.text_to_be_present_in_element(
